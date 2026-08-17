@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.time.Instant;
 import org.mockito.ArgumentCaptor;
 import org.springframework.test.util.ReflectionTestUtils;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,6 +56,7 @@ class MaintenanceRequestServiceTest {
         fixture.setPriority("sample-priority");
         fixture.setStatus("sample-status");
         fixture.setEstimatedCost(new java.math.BigDecimal("42.00"));
+        fixture.setResolvedAt(Instant.parse("2024-01-01T00:00:00Z"));
         strategyFactory = new MaintenanceRequestStrategyFactory(List.of(strategy));
         service = new MaintenanceRequestService(repository, staffRepository, strategyFactory);
     }
@@ -95,7 +97,7 @@ class MaintenanceRequestServiceTest {
 
     @Test
     void should_persist_entity_and_return_response_when_create_is_called() {
-        MaintenanceRequestCreateRequest request = new MaintenanceRequestCreateRequest(UUID.fromString("11111111-1111-1111-1111-111111111111"), UUID.fromString("11111111-1111-1111-1111-111111111111"), UUID.fromString("11111111-1111-1111-1111-111111111111"), "test-value", "test-value", "test-value", "test-value", new java.math.BigDecimal("1.00"), java.time.LocalDateTime.of(2024, 1, 1, 0, 0), UUID.fromString("11111111-1111-1111-1111-111111111111"));
+        MaintenanceRequestCreateRequest request = new MaintenanceRequestCreateRequest(UUID.fromString("11111111-1111-1111-1111-111111111111"), UUID.fromString("11111111-1111-1111-1111-111111111111"), UUID.fromString("11111111-1111-1111-1111-111111111111"), "test-value", "test-value", "test-value", "test-value", new java.math.BigDecimal("1.00"), java.time.Instant.parse("2024-01-01T00:00:00Z"), UUID.fromString("11111111-1111-1111-1111-111111111111"));
         when(staffRepository.findById(any())).thenReturn(Optional.of(new Staff()));
         when(strategy.supports(any())).thenReturn(true);
         when(repository.save(any(MaintenanceRequest.class))).thenReturn(fixture);
@@ -115,7 +117,7 @@ class MaintenanceRequestServiceTest {
 
     @Test
     void should_update_entity_and_return_response_when_entity_exists() {
-        MaintenanceRequestUpdateRequest request = new MaintenanceRequestUpdateRequest(UUID.fromString("22222222-2222-2222-2222-222222222222"), UUID.fromString("22222222-2222-2222-2222-222222222222"), UUID.fromString("22222222-2222-2222-2222-222222222222"), "updated-value", "updated-value", "updated-value", "updated-value", new java.math.BigDecimal("2.00"), java.time.LocalDateTime.of(2025, 6, 1, 0, 0), UUID.fromString("22222222-2222-2222-2222-222222222222"));
+        MaintenanceRequestUpdateRequest request = new MaintenanceRequestUpdateRequest(UUID.fromString("22222222-2222-2222-2222-222222222222"), UUID.fromString("22222222-2222-2222-2222-222222222222"), UUID.fromString("22222222-2222-2222-2222-222222222222"), "updated-value", "updated-value", "updated-value", "updated-value", new java.math.BigDecimal("2.00"), java.time.Instant.parse("2025-06-01T00:00:00Z"), UUID.fromString("22222222-2222-2222-2222-222222222222"));
         when(staffRepository.findById(any())).thenReturn(Optional.of(new Staff()));
         when(repository.findById(EXISTING_ID)).thenReturn(Optional.of(fixture));
         when(repository.save(any(MaintenanceRequest.class))).thenReturn(fixture);
@@ -133,7 +135,7 @@ class MaintenanceRequestServiceTest {
 
     @Test
     void should_throw_entity_not_found_when_updating_with_unknown_id() {
-        MaintenanceRequestUpdateRequest request = new MaintenanceRequestUpdateRequest(UUID.fromString("22222222-2222-2222-2222-222222222222"), UUID.fromString("22222222-2222-2222-2222-222222222222"), UUID.fromString("22222222-2222-2222-2222-222222222222"), "updated-value", "updated-value", "updated-value", "updated-value", new java.math.BigDecimal("2.00"), java.time.LocalDateTime.of(2025, 6, 1, 0, 0), UUID.fromString("22222222-2222-2222-2222-222222222222"));
+        MaintenanceRequestUpdateRequest request = new MaintenanceRequestUpdateRequest(UUID.fromString("22222222-2222-2222-2222-222222222222"), UUID.fromString("22222222-2222-2222-2222-222222222222"), UUID.fromString("22222222-2222-2222-2222-222222222222"), "updated-value", "updated-value", "updated-value", "updated-value", new java.math.BigDecimal("2.00"), java.time.Instant.parse("2025-06-01T00:00:00Z"), UUID.fromString("22222222-2222-2222-2222-222222222222"));
         when(repository.findById(MISSING_ID)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> service.update(MISSING_ID, request))

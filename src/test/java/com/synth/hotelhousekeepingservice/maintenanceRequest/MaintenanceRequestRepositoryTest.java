@@ -12,7 +12,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import java.util.UUID;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.math.BigDecimal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -91,7 +91,7 @@ class MaintenanceRequestRepositoryTest {
         
         entity.setEstimatedCost(new BigDecimal(seed + 1));
         
-        entity.setResolvedAt(LocalDateTime.now().plusDays(seed));
+        entity.setResolvedAt(Instant.now());
         
         entity.setAssignedTechnicianId(null);
         return entity;

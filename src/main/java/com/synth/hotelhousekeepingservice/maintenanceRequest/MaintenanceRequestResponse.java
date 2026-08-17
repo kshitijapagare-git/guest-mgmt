@@ -1,6 +1,6 @@
 package com.synth.hotelhousekeepingservice.maintenanceRequest;
 import java.util.UUID;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.math.BigDecimal;
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.synth.hotelhousekeepingservice.staff.Staff;
@@ -15,7 +15,7 @@ public record MaintenanceRequestResponse(
         String priority,
         String status,
         BigDecimal estimatedCost,
-        LocalDateTime resolvedAt,
+        Instant resolvedAt,
         StaffSummary assignedTechnicianId
 ) {
     public record StaffSummary(UUID id, String firstName, String lastName, String email, String phone, String role, String status) {}

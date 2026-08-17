@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.UUID;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.math.BigDecimal;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -52,7 +52,7 @@ public class MaintenanceRequest {
     private BigDecimal estimatedCost;
 
     @Column(nullable = true)
-    private LocalDateTime resolvedAt;
+    private Instant resolvedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assigned_technician_id", nullable = true)

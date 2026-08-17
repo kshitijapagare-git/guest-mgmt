@@ -34,6 +34,21 @@ public class MaintenanceRequestStatusTransitionController {
         return MaintenanceRequestResponse.from(repository.save(entity));
     }
 
+    @PostMapping("/{id}/reassign")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Technician reassigned while request remains in ASSIGNED")
+    @Transactional
+    public MaintenanceRequestResponse reassign(@PathVariable UUID id) {
+        MaintenanceRequest entity = repository.findById(id)
+                .orElseThrow(() -> new MaintenanceRequestNotFoundException(id));
+        if (!entity.getStatus().equals("ASSIGNED")) {
+            throw new IllegalStateException(
+                    "Status must be 'ASSIGNED' to perform this transition, current is '" + entity.getStatus() + "'");
+        }
+        entity.setStatus("ASSIGNED");
+        return MaintenanceRequestResponse.from(repository.save(entity));
+    }
+
     @PostMapping("/{id}/start")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Technician starts work")

@@ -1,7 +1,7 @@
 package com.synth.hotelhousekeepingservice.maintenanceRequest;
 import jakarta.validation.constraints.*;
 import java.util.UUID;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.math.BigDecimal;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -21,7 +21,7 @@ public record MaintenanceRequestCreateRequest(
         @Pattern(regexp = "^(LOW|NORMAL|HIGH|URGENT)$") @NotBlank String priority,
         @Pattern(regexp = "^(OPEN|ASSIGNED|IN_PROGRESS|RESOLVED|CLOSED)$") @NotBlank String status,
         @Min(0) BigDecimal estimatedCost,
-        LocalDateTime resolvedAt,
+        Instant resolvedAt,
         UUID assignedTechnicianId
 ) {
 }

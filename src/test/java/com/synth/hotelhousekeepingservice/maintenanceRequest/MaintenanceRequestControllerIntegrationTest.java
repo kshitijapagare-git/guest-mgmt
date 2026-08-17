@@ -51,7 +51,7 @@ class MaintenanceRequestControllerIntegrationTest {
 
     /** Returns the minimal valid JSON payload, substituting live parent IDs for FK fields. */
     private String payload() {
-        return String.format("{\"hotelId\":\"00000000-0000-0000-0000-000000000001\",\"roomId\":\"00000000-0000-0000-0000-000000000001\",\"reportedByGuestId\":\"00000000-0000-0000-0000-000000000001\",\"issueType\":\"PLUMBING\",\"description\":\"test-security\",\"priority\":\"LOW\",\"status\":\"OPEN\",\"estimatedCost\":1.0,\"resolvedAt\":\"2024-01-15T10:30:00\",\"assignedTechnicianId\":\"%s\"}", staffFixtureId);
+        return String.format("{\"hotelId\":\"00000000-0000-0000-0000-000000000001\",\"roomId\":\"00000000-0000-0000-0000-000000000001\",\"reportedByGuestId\":\"00000000-0000-0000-0000-000000000001\",\"issueType\":\"PLUMBING\",\"description\":\"test-security\",\"priority\":\"LOW\",\"status\":\"OPEN\",\"estimatedCost\":1.0,\"resolvedAt\":\"2024-01-15T10:30:00Z\",\"assignedTechnicianId\":\"%s\"}", staffFixtureId);
     }
 
     @BeforeAll
@@ -122,7 +122,7 @@ class MaintenanceRequestControllerIntegrationTest {
                 .andExpect(jsonPath("$.priority").value("LOW"))
                 .andExpect(jsonPath("$.status").value("OPEN"))
                 .andExpect(jsonPath("$.estimatedCost").value(1.0))
-                .andExpect(jsonPath("$.resolvedAt").value("2024-01-15T10:30:00"));
+                .andExpect(jsonPath("$.resolvedAt").value("2024-01-15T10:30:00Z"));
     }
 
     @Test
@@ -160,7 +160,7 @@ class MaintenanceRequestControllerIntegrationTest {
                 .andExpect(jsonPath("$.priority").value("LOW"))
                 .andExpect(jsonPath("$.status").value("OPEN"))
                 .andExpect(jsonPath("$.estimatedCost").value(1.0))
-                .andExpect(jsonPath("$.resolvedAt").value("2024-01-15T10:30:00"));
+                .andExpect(jsonPath("$.resolvedAt").value("2024-01-15T10:30:00Z"));
 
         assertThat(repository.count()).isEqualTo(1);
     }
