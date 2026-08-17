@@ -1,7 +1,7 @@
 package com.synth.hotelhousekeepingservice.housekeepingTask;
 import java.util.UUID;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.synth.hotelhousekeepingservice.staff.Staff;
 
@@ -13,7 +13,7 @@ public record HousekeepingTaskResponse(
         String priority,
         String status,
         LocalDate scheduledDate,
-        LocalDateTime completedAt,
+        Instant completedAt,
         String notes,
         StaffSummary assignedStaffId
 ) {

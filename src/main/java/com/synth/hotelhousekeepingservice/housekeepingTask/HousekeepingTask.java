@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.util.UUID;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -46,7 +46,7 @@ public class HousekeepingTask {
     private LocalDate scheduledDate;
 
     @Column(nullable = true)
-    private LocalDateTime completedAt;
+    private Instant completedAt;
 
     @Column(nullable = true, length = 500)
     private String notes;

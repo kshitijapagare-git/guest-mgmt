@@ -51,7 +51,7 @@ class HousekeepingTaskControllerIntegrationTest {
 
     /** Returns the minimal valid JSON payload, substituting live parent IDs for FK fields. */
     private String payload() {
-        return String.format("{\"hotelId\":\"00000000-0000-0000-0000-000000000001\",\"roomId\":\"00000000-0000-0000-0000-000000000001\",\"taskType\":\"CLEANING\",\"priority\":\"LOW\",\"status\":\"PENDING\",\"scheduledDate\":\"2024-01-15\",\"completedAt\":\"2024-01-15T10:30:00\",\"notes\":\"test-security\",\"assignedStaffId\":\"%s\"}", staffFixtureId);
+        return String.format("{\"hotelId\":\"00000000-0000-0000-0000-000000000001\",\"roomId\":\"00000000-0000-0000-0000-000000000001\",\"taskType\":\"CLEANING\",\"priority\":\"LOW\",\"status\":\"PENDING\",\"scheduledDate\":\"2024-01-15\",\"completedAt\":\"2024-01-15T10:30:00Z\",\"notes\":\"test-security\",\"assignedStaffId\":\"%s\"}", staffFixtureId);
     }
 
     @BeforeAll
@@ -120,7 +120,7 @@ class HousekeepingTaskControllerIntegrationTest {
                 .andExpect(jsonPath("$.priority").value("LOW"))
                 .andExpect(jsonPath("$.status").value("PENDING"))
                 .andExpect(jsonPath("$.scheduledDate").value("2024-01-15"))
-                .andExpect(jsonPath("$.completedAt").value("2024-01-15T10:30:00"))
+                .andExpect(jsonPath("$.completedAt").value("2024-01-15T10:30:00Z"))
                 .andExpect(jsonPath("$.notes").value("test-security"));
     }
 
@@ -157,7 +157,7 @@ class HousekeepingTaskControllerIntegrationTest {
                 .andExpect(jsonPath("$.priority").value("LOW"))
                 .andExpect(jsonPath("$.status").value("PENDING"))
                 .andExpect(jsonPath("$.scheduledDate").value("2024-01-15"))
-                .andExpect(jsonPath("$.completedAt").value("2024-01-15T10:30:00"))
+                .andExpect(jsonPath("$.completedAt").value("2024-01-15T10:30:00Z"))
                 .andExpect(jsonPath("$.notes").value("test-security"));
 
         assertThat(repository.count()).isEqualTo(1);

@@ -12,8 +12,8 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import java.util.UUID;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -87,7 +87,7 @@ class HousekeepingTaskRepositoryTest {
         
         entity.setScheduledDate(LocalDate.now().plusDays(seed));
         
-        entity.setCompletedAt(LocalDateTime.now().plusDays(seed));
+        entity.setCompletedAt(Instant.now());
         
         entity.setNotes("test-security" + seed);
         

@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.time.Instant;
 import org.mockito.ArgumentCaptor;
 import org.springframework.test.util.ReflectionTestUtils;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,6 +53,7 @@ class HousekeepingTaskServiceTest {
         fixture.setTaskType("sample-task-type");
         fixture.setPriority("sample-priority");
         fixture.setStatus("sample-status");
+        fixture.setCompletedAt(Instant.parse("2024-01-01T00:00:00Z"));
         fixture.setNotes("sample-notes");
         strategyFactory = new HousekeepingTaskStrategyFactory(List.of(strategy));
         service = new HousekeepingTaskService(repository, staffRepository, strategyFactory);
@@ -93,7 +95,7 @@ class HousekeepingTaskServiceTest {
 
     @Test
     void should_persist_entity_and_return_response_when_create_is_called() {
-        HousekeepingTaskCreateRequest request = new HousekeepingTaskCreateRequest(UUID.fromString("11111111-1111-1111-1111-111111111111"), UUID.fromString("11111111-1111-1111-1111-111111111111"), "test-value", "test-value", "test-value", java.time.LocalDate.of(2024, 1, 1), java.time.LocalDateTime.of(2024, 1, 1, 0, 0), "test-value", UUID.fromString("11111111-1111-1111-1111-111111111111"));
+        HousekeepingTaskCreateRequest request = new HousekeepingTaskCreateRequest(UUID.fromString("11111111-1111-1111-1111-111111111111"), UUID.fromString("11111111-1111-1111-1111-111111111111"), "test-value", "test-value", "test-value", java.time.LocalDate.of(2024, 1, 1), java.time.Instant.parse("2024-01-01T00:00:00Z"), "test-value", UUID.fromString("11111111-1111-1111-1111-111111111111"));
         when(staffRepository.findById(any())).thenReturn(Optional.of(new Staff()));
         when(strategy.supports(any())).thenReturn(true);
         when(repository.save(any(HousekeepingTask.class))).thenReturn(fixture);
@@ -113,7 +115,7 @@ class HousekeepingTaskServiceTest {
 
     @Test
     void should_update_entity_and_return_response_when_entity_exists() {
-        HousekeepingTaskUpdateRequest request = new HousekeepingTaskUpdateRequest(UUID.fromString("22222222-2222-2222-2222-222222222222"), UUID.fromString("22222222-2222-2222-2222-222222222222"), "updated-value", "updated-value", "updated-value", java.time.LocalDate.of(2025, 6, 1), java.time.LocalDateTime.of(2025, 6, 1, 0, 0), "updated-value", UUID.fromString("22222222-2222-2222-2222-222222222222"));
+        HousekeepingTaskUpdateRequest request = new HousekeepingTaskUpdateRequest(UUID.fromString("22222222-2222-2222-2222-222222222222"), UUID.fromString("22222222-2222-2222-2222-222222222222"), "updated-value", "updated-value", "updated-value", java.time.LocalDate.of(2025, 6, 1), java.time.Instant.parse("2025-06-01T00:00:00Z"), "updated-value", UUID.fromString("22222222-2222-2222-2222-222222222222"));
         when(staffRepository.findById(any())).thenReturn(Optional.of(new Staff()));
         when(repository.findById(EXISTING_ID)).thenReturn(Optional.of(fixture));
         when(repository.save(any(HousekeepingTask.class))).thenReturn(fixture);
@@ -131,7 +133,7 @@ class HousekeepingTaskServiceTest {
 
     @Test
     void should_throw_entity_not_found_when_updating_with_unknown_id() {
-        HousekeepingTaskUpdateRequest request = new HousekeepingTaskUpdateRequest(UUID.fromString("22222222-2222-2222-2222-222222222222"), UUID.fromString("22222222-2222-2222-2222-222222222222"), "updated-value", "updated-value", "updated-value", java.time.LocalDate.of(2025, 6, 1), java.time.LocalDateTime.of(2025, 6, 1, 0, 0), "updated-value", UUID.fromString("22222222-2222-2222-2222-222222222222"));
+        HousekeepingTaskUpdateRequest request = new HousekeepingTaskUpdateRequest(UUID.fromString("22222222-2222-2222-2222-222222222222"), UUID.fromString("22222222-2222-2222-2222-222222222222"), "updated-value", "updated-value", "updated-value", java.time.LocalDate.of(2025, 6, 1), java.time.Instant.parse("2025-06-01T00:00:00Z"), "updated-value", UUID.fromString("22222222-2222-2222-2222-222222222222"));
         when(repository.findById(MISSING_ID)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> service.update(MISSING_ID, request))

@@ -1,8 +1,8 @@
 package com.synth.hotelhousekeepingservice.housekeepingTask;
 import jakarta.validation.constraints.*;
 import java.util.UUID;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
@@ -19,7 +19,7 @@ public record HousekeepingTaskUpdateRequest(
         @Pattern(regexp = "^(LOW|NORMAL|HIGH|URGENT)$") @NotBlank String priority,
         @Pattern(regexp = "^(PENDING|IN_PROGRESS|COMPLETED|SKIPPED)$") @NotBlank String status,
         @NotNull LocalDate scheduledDate,
-        LocalDateTime completedAt,
+        Instant completedAt,
         @Size(max = 500) String notes,
         UUID assignedStaffId
 ) {}
